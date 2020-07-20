@@ -44,6 +44,7 @@ v0.3.3 (2022-06-03)
 * :gh:issue:`920` Support Ansible :ans:conn:`~podman` connection plugin
 * :gh:issue:`836` :func:`mitogen.utils.with_router` decorator preserves the docstring in addition to the name.
 * :gh:issue:`936` :ans:mod:`fetch` no longer emits `[DEPRECATION WARNING]: The '_remote_checksum()' method is deprecated.`
+* :gh:issue:`682`: mitogen did not deploy class level imports.
 
 
 v0.3.2 (2022-01-12)
