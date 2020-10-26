@@ -204,6 +204,7 @@ if mitogen.is_master:
 
 
 BUILD_TUPLE = dis.opname.index('BUILD_TUPLE')
+LOAD_BUILD_CLASS = dis.opname.index('LOAD_BUILD_CLASS')
 LOAD_CONST = dis.opname.index('LOAD_CONST')
 LOAD_NAME = dis.opname.index('LOAD_NAME')
 IMPORT_NAME = dis.opname.index('IMPORT_NAME')
@@ -267,6 +268,9 @@ def scan_code_imports(co):
             # Scan defined classes for imports
             if op1 == LOAD_NAME and op2 == BUILD_TUPLE and op3 == LOAD_CONST and isinstance(co.co_consts[arg3],types.CodeType):
                 for level, modname, namelist in scan_code_imports(co.co_consts[arg3]):
+                    yield (level, modname, namelist)
+            if op1 == LOAD_BUILD_CLASS and op2 == LOAD_CONST and isinstance(co.co_consts[arg2],types.CodeType):
+                for level, modname, namelist in scan_code_imports(co.co_consts[arg2]):
                     yield (level, modname, namelist)
             if op3 == IMPORT_NAME and op1 == op2 == LOAD_CONST:
                     yield (co.co_consts[arg1],
